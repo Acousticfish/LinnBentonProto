@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/modernist-93fe45a5-5d86-4ced-b33a-5a6924989e5c/styles.css">
+<script src="_ds/modernist-93fe45a5-5d86-4ced-b33a-5a6924989e5c/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&display=swap">
+<style>
+:root {
+  --color-bg: #f4f5f7;
+  --color-surface: #ffffff;
+  --color-text: #1c2430;
+  --color-divider: #ccd2da;
+  --color-accent: #1f2ec2;
+  --color-accent-100: #e9ebfa; --color-accent-200: #ccd1f4; --color-accent-300: #9aa4e8;
+  --color-accent-400: #5361d4; --color-accent-500: #1f2ec2; --color-accent-600: #1a28ab;
+  --color-accent-700: #15208c; --color-accent-800: #101a6e; --color-accent-900: #0b124e;
+  --color-accent-2: #1f2ec2;
+  --color-accent-2-100: #e9ebfa; --color-accent-2-200: #ccd1f4; --color-accent-2-300: #9aa4e8;
+  --color-accent-2-400: #5361d4; --color-accent-2-500: #1f2ec2; --color-accent-2-600: #1a28ab;
+  --color-accent-2-700: #15208c; --color-accent-2-800: #101a6e; --color-accent-2-900: #0b124e;
+  --color-neutral-100: #e9ecf1; --color-neutral-200: #dde2e9;
+  --radius-sm: 3px; --radius-md: 4px; --radius-lg: 6px;
+  --font-heading: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-heading-weight: 600;
+}
+body { margin: 0; text-wrap: pretty; background: var(--color-bg); -webkit-text-size-adjust: 100%; }
+a { color: var(--color-accent-700); text-decoration: none; }
+a:hover { color: var(--color-accent); text-decoration: underline; }
+input, textarea, select, .input { font-size: 16px; }
+.pt-app { container-type: inline-size; container-name: portal; }
+.pt-wrap { max-width: 760px; margin: 0 auto; padding-inline: 16px; }
+.pt-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pt-drawer { display: none; }
+.pt-drawer.is-open { display: block; }
+@media print {
+  body { background: #fff; }
+  body * { visibility: hidden; }
+  .pt-printable, .pt-printable * { visibility: visible; }
+  .pt-printable { position: absolute; top: 0; left: 0; width: 100%; margin: 0; border-top: 2px solid #000; }
+  .pt-printhead { display: block !important; }
+}
+@container portal (min-width: 720px) {
+  .pt-wrap { padding-inline: 28px; }
+  .pt-tiles { grid-template-columns: repeat(4, 1fr); }
+}
+</style>
+</helmet>
+
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    <rect width="120" height="120" fill="#f3f2f2"></rect>
+    <rect x="18" y="18" width="84" height="84" fill="#ec3013"></rect>
+    <text x="60" y="74" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="700" font-size="34" fill="#ffffff">LB</text>
+  </svg>
+</template>
+
+<div class="pt-app" style="font-family: var(--font-body); color: var(--color-text); background: var(--color-bg); min-height: 100vh; padding-bottom: 78px">
+
+  <header style="position: sticky; top: 0; z-index: 30; background: var(--color-surface); border-bottom: 1px solid var(--color-divider)">
+    <div class="pt-wrap" style="display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 56px">
+      <div style="display: flex; align-items: center; gap: 10px; min-width: 0">
+        <img src="assets/lbana-logo.png" alt="Linn Benton Area NA" style="flex: 0 0 auto; width: 38px; height: 38px; object-fit: contain">
+        <div style="min-width: 0">
+          <p style="margin: 0; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 60%, transparent)">Linn Benton Area</p>
+          <p style="margin: 1px 0 0; font-family: var(--font-heading); font-weight: 600; font-size: 17px; letter-spacing: -0.01em">Service Portal</p>
+        </div>
+      </div>
+      <button type="button" onClick="{{ toggleGroupMenu }}" style="appearance: none; cursor: pointer; min-height: 40px; padding: 0 12px; background: var(--color-accent-100); border: 1px solid var(--color-accent-200); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 13px; letter-spacing: 0.01em; color: var(--color-accent-700); max-width: 58%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{ activeGroup }}</button>
+    </div>
+    <div class="{{ groupMenuClass }}" style="border-top: 1px solid var(--color-divider); background: var(--color-neutral-100)">
+      <div class="pt-wrap" style="padding-block: 10px 14px">
+        <p style="margin: 0 0 8px; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 60%, transparent)">Reporting as</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <sc-for list="{{ groupOptions }}" as="g" hint-placeholder-count="5">
+            <button type="button" onClick="{{ g.onClick }}" style="appearance: none; cursor: pointer; min-height: 40px; padding: 0 14px; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 13.5px; border: 1px solid {{ g.border }}; background: {{ g.bg }}; color: {{ g.color }}">{{ g.label }}</button>
+          </sc-for>
+        </div>
+        <sc-if value="{{ groupsManual }}" hint-placeholder-val="{{ false }}">
+          <input class="input" type="text" value="{{ groupTyped }}" onChange="{{ setGroupTyped }}" placeholder="Your group name" style="width: 100%; box-sizing: border-box; min-height: 48px; margin-top: 10px">
+        </sc-if>
+        <p style="margin: 12px 0 0; font-size: 12.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 68%, transparent)">{{ groupSourceNote }}</p>
+        <p style="margin: 6px 0 0; font-size: 12.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 68%, transparent)">Submissions are attributed to the group, never to a person.</p>
+      </div>
+    </div>
+  </header>
+
+  <sc-if value="{{ offline }}" hint-placeholder-val="{{ false }}">
+    <div style="background: var(--color-accent-900); color: #fff">
+      <div class="pt-wrap" style="padding-block: 9px; font-size: 12.5px; line-height: 1.5">No connection. You can keep working — drafts and documents are stored on this device and sync when you're back.</div>
+    </div>
+  </sc-if>
+
+  <!-- ============ HOME ============ -->
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <main class="pt-wrap" style="padding-block: 22px 30px">
+      <h1 style="margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 25px; line-height: 1.2; letter-spacing: -0.015em">What do you need to do?</h1>
+      <p style="margin: 8px 0 0; font-size: 14.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 72%, transparent)">Area service meets the first Sunday of the month at 525 N Santiam Hwy, Lebanon — Public Relations at 11:00 AM, ASC at 2:00 PM. Reports can be edited right up until ASC starts.</p>
+
+      <div class="pt-tiles" style="margin-top: 18px">
+        <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="4">
+          <button type="button" onClick="{{ t.onClick }}" style="appearance: none; cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 6px; min-height: 108px; padding: 14px; background: var(--color-surface); border: 1px solid var(--color-divider); border-top: 3px solid var(--color-accent); border-radius: var(--radius-md); font-family: var(--font-body); color: var(--color-text)" style-hover="background: var(--color-accent-100)">
+            <span style="font-family: var(--font-heading); font-weight: 600; font-size: 16.5px; line-height: 1.25; letter-spacing: -0.01em">{{ t.label }}</span>
+            <span style="font-size: 12.5px; line-height: 1.5; color: color-mix(in srgb, var(--color-text) 68%, transparent)">{{ t.note }}</span>
+            <span style="margin-top: auto; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-accent-700)">{{ t.status }}</span>
+          </button>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{ hasDraft }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top: 18px; background: var(--color-accent-100); border: 1px solid var(--color-accent-200); border-radius: var(--radius-md); padding: 14px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+          <div style="min-width: 0">
+            <p style="margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 15.5px; color: var(--color-accent-800)">Unfinished report saved</p>
+            <p style="margin: 4px 0 0; font-size: 12.5px; line-height: 1.5; color: var(--color-accent-700)">{{ draftNote }}</p>
+          </div>
+          <button type="button" class="btn btn-primary" style="min-height: 44px" onClick="{{ resumeDraft }}">Pick up where you left off</button>
+        </div>
+      </sc-if>
+
+      <section style="margin-top: 28px">
+        <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px; border-bottom: 2px solid var(--color-text); padding-bottom: 8px">
+          <h2 style="margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 17px; letter-spacing: -0.01em">{{ submissionsHeading }}</h2>
+          <button type="button" onClick="{{ toggleRole }}" style="appearance: none; cursor: pointer; background: transparent; border: 0; padding: 4px 0; font-family: var(--font-body); font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-accent-700)">{{ roleLabel }}</button>
+        </div>
+        <sc-for list="{{ submissions }}" as="s" hint-placeholder-count="3">
+          <div style="display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; padding: 13px 0; border-bottom: 1px solid var(--color-divider)">
+            <span style="flex: 0 0 62px; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 60%, transparent)">{{ s.date }}</span>
+            <span style="flex: 2 1 170px; min-width: 0; font-family: var(--font-heading); font-weight: 600; font-size: 15.5px; letter-spacing: -0.01em">{{ s.title }}</span>
+            <span style="flex: 1 1 110px; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 68%, transparent)">{{ s.group }}</span>
+            <span class="tag tag-outline" style="font-size: 11px">{{ s.state }}</span>
+            <sc-if value="{{ s.editable }}" hint-placeholder-val="{{ false }}">
+              <button type="button" onClick="{{ s.onEdit }}" style="appearance: none; cursor: pointer; background: transparent; border: 0; padding: 6px 0; font-family: var(--font-body); font-size: 12.5px; color: var(--color-accent-700)">Edit</button>
+            </sc-if>
+          </div>
+        </sc-for>
+        <sc-if value="{{ noSubmissions }}" hint-placeholder-val="{{ false }}">
+          <p style="margin: 16px 0 0; font-size: 14px; line-height: 1.65; color: color-mix(in srgb, var(--color-text) 68%, transparent)">Nothing submitted yet from this group.</p>
+        </sc-if>
+      </section>
+    </main>
+  </sc-if>
+
+  <!-- ============ GUIDED REPORT ============ -->
+  <sc-if value="{{ isReport }}" hint-placeholder-val="{{ false }}">
+    <main class="pt-wrap" style="padding-block: 0 30px">
+      <div style="position: sticky; top: 56px; z-index: 20; background: var(--color-bg); padding-block: 14px 12px">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+          <button type="button" onClick="{{ stepBack }}" style="appearance: none; cursor: pointer; background: transparent; border: 0; padding: 8px 0; margin: 0; font-family: var(--font-body); font-size: 13.5px; color: var(--color-accent-700)">{{ backLabel }}</button>
+          <span style="font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 60%, transparent)">{{ stepCounter }}</span>
+        </div>
+        <div style="display: flex; gap: 3px; margin-top: 8px">
+          <sc-for list="{{ stepBars }}" as="b" hint-placeholder-count="9">
+            <span style="flex: 1 1 0; height: 3px; background: {{ b.fill }}"></span>
+          </sc-for>
+        </div>
+      </div>
+
+      <sc-if value="{{ onQuestions }}" hint-placeholder-val="{{ true }}">
+        <div>
+          <h1 style="margin: 10px 0 0; font-family: var(--font-heading); font-weight: 600; font-size: 25px; line-height: 1.22; letter-spacing: -0.015em">{{ stepTitle }}</h1>
+          <p style="margin: 8px 0 0; font-size: 14.5px; line-height: 1.62; color: color-mix(in srgb, var(--color-text) 72%, transparent)">{{ stepHint }}</p>
+          <div style="display: flex; flex-direction: column; gap: 22px; margin-top: 24px">
+            <sc-for list="{{ stepFields }}" as="f" hint-placeholder-count="2">
+              <div>
+                <label for="{{ f.key }}" style="display: block; font-size: 13px; letter-spacing: 0.02em; font-weight: 600; margin-bottom: 8px">{{ f.label }}</label>
+                <sc-if value="{{ f.isChoice }}" hint-placeholder-val="{{ false }}">
+                  <div style="display: flex; flex-wrap: wrap; gap: 8px">
+                    <sc-for list="{{ f.options }}" as="o" hint-placeholder-count="3">
+                      <button type="button" onClick="{{ o.onClick }}" style="appearance: none; cursor: pointer; min-height: 46px; padding: 0 16px; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 14.5px; border: 1px solid {{ o.border }}; background: {{ o.bg }}; color: {{ o.color }}">{{ o.label }}</button>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ f.isDays }}" hint-placeholder-val="{{ false }}">
+                  <div style="display: flex; flex-wrap: wrap; gap: 7px">
+                    <sc-for list="{{ f.dayToggles }}" as="d" hint-placeholder-count="7">
+                      <button type="button" onClick="{{ d.onClick }}" style="appearance: none; cursor: pointer; min-width: 48px; min-height: 48px; padding: 0 12px; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 14.5px; border: 1px solid {{ d.border }}; background: {{ d.bg }}; color: {{ d.color }}">{{ d.label }}</button>
+                    </sc-for>
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px">
+                    <sc-for list="{{ f.dayTimes }}" as="t" hint-placeholder-count="0">
+                      <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+                        <span style="flex: 0 0 86px; font-size: 13.5px; color: color-mix(in srgb, var(--color-text) 74%, transparent)">{{ t.label }}</span>
+                        <input class="input" type="text" value="{{ t.value }}" onChange="{{ t.onInput }}" placeholder="6:00 PM" style="flex: 1 1 140px; min-width: 0; box-sizing: border-box; min-height: 48px">
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ f.isGrid }}" hint-placeholder-val="{{ false }}">
+                  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); gap: 14px 12px">
+                    <sc-for list="{{ f.cells }}" as="c" hint-placeholder-count="3">
+                      <div>
+                        <label for="{{ c.key }}" style="display: block; font-size: 12px; letter-spacing: 0.02em; margin-bottom: 6px; color: color-mix(in srgb, var(--color-text) 70%, transparent)">{{ c.label }}</label>
+                        <input class="input" id="{{ c.key }}" type="text" inputmode="decimal" value="{{ c.value }}" onChange="{{ c.onInput }}" placeholder="{{ c.placeholder }}" style="width: 100%; box-sizing: border-box; min-height: 46px">
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ f.isPositions }}" hint-placeholder-val="{{ false }}">
+                  <div style="display: flex; flex-direction: column; gap: 1px; background: var(--color-divider); border-block: 1px solid var(--color-divider)">
+                    <sc-for list="{{ f.cells }}" as="c" hint-placeholder-count="6">
+                      <div style="display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; justify-content: space-between; background: var(--color-surface); padding: 9px 12px">
+                        <span style="flex: 1 1 110px; font-size: 14.5px">{{ c.label }}</span>
+                        <div style="display: flex; gap: 6px">
+                          <sc-for list="{{ c.options }}" as="o" hint-placeholder-count="2">
+                            <button type="button" onClick="{{ o.onClick }}" style="appearance: none; cursor: pointer; min-height: 44px; padding: 0 15px; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 13.5px; border: 1px solid {{ o.border }}; background: {{ o.bg }}; color: {{ o.color }}">{{ o.label }}</button>
+                          </sc-for>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ f.isArea }}" hint-placeholder-val="{{ false }}">
+                  <textarea class="input" id="{{ f.key }}" rows="4" value="{{ f.value }}" onChange="{{ f.onInput }}" placeholder="{{ f.placeholder }}" style="width: 100%; box-sizing: border-box; resize: vertical; min-height: 96px"></textarea>
+                </sc-if>
+                <sc-if value="{{ f.isNumber }}" hint-placeholder-val="{{ false }}">
+                  <input class="input" id="{{ f.key }}" type="text" inputmode="decimal" value="{{ f.value }}" onChange="{{ f.onInput }}" placeholder="{{ f.placeholder }}" style="width: 100%; box-sizing: border-box; min-height: 48px">
+                </sc-if>
+                <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ false }}">
+                  <input class="input" id="{{ f.key }}" type="text" value="{{ f.value }}" onChange="{{ f.onInput }}" placeholder="{{ f.placeholder }}" style="width: 100%; box-sizing: border-box; min-height: 48px">
+                </sc-if>
+                <p style="margin: 8px 0 0; font-size: 12.5px; line-height: 1.5; color: color-mix(in srgb, var(--color-text) 62%, transparent)">{{ f.help }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ onReview }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <h1 style="margin: 10px 0 0; font-family: var(--font-heading); font-weight: 600; font-size: 25px; line-height: 1.22; letter-spacing: -0.015em">Read it over</h1>
+          <p style="margin: 8px 0 0; font-size: 14.5px; line-height: 1.62; color: color-mix(in srgb, var(--color-text) 72%, transparent)">This is what the secretary will read. You can change any of it until the area meeting starts.</p>
+          <div style="margin-top: 22px; border-top: 2px solid var(--color-text)">
+            <sc-for list="{{ reviewRows }}" as="r" hint-placeholder-count="8">
+              <div style="display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--color-divider)">
+                <span style="flex: 1 1 150px; font-size: 12.5px; letter-spacing: 0.04em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 62%, transparent)">{{ r.label }}</span>
+                <span style="flex: 2 1 200px; min-width: 0; font-size: 15px; line-height: 1.55">{{ r.value }}</span>
+                <button type="button" onClick="{{ r.onEdit }}" style="appearance: none; cursor: pointer; background: transparent; border: 0; padding: 0; font-family: var(--font-body); font-size: 12.5px; color: var(--color-accent-700)">Change</button>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ onDone }}" hint-placeholder-val="{{ false }}">
+        <div style="padding-block: 28px 8px">
+          <h1 style="margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 26px; line-height: 1.2; letter-spacing: -0.015em">Report submitted</h1>
+          <p style="margin: 10px 0 0; font-size: 15px; line-height: 1.65; max-width: 46ch; color: color-mix(in srgb, var(--color-text) 74%, transparent)">It's in the packet for the next area meeting, filed under {{ activeGroup }}. Edit it any time before ASC starts at 2:00 PM.</p>
+          <p style="margin: 8px 0 0; font-size: 13px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 66%, transparent)">Saved on this device for the test. Print it or save it as a PDF to hand in at area.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px">
+            <button type="button" class="btn btn-primary" style="min-height: 48px" onClick="{{ goHome }}">Back to the portal</button>
+            <button type="button" class="btn btn-secondary" style="min-height: 48px" onClick="{{ printReport }}">Print or save as PDF</button>
+            <button type="button" class="btn btn-ghost" style="min-height: 48px" onClick="{{ editSubmitted }}">Edit what was sent</button>
+          </div>
+
+          <div class="pt-printable" style="margin-top: 28px; border-top: 2px solid var(--color-text)">
+            <img class="pt-printhead" src="assets/lbana-logo.png" alt="" style="display: none; width: 64px; height: 64px; object-fit: contain; margin: 0 0 8px">
+        <p class="pt-printhead" style="display: none; margin: 0 0 4px; font-family: var(--font-heading); font-weight: 600; font-size: 20px">Linn Benton Area &mdash; Group Report</p>
+            <p class="pt-printhead" style="display: none; margin: 0 0 14px; font-size: 13px">{{ activeGroup }} &middot; {{ printedOn }}</p>
+            <sc-for list="{{ submittedRows }}" as="r" hint-placeholder-count="8">
+              <div style="display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--color-divider)">
+                <span style="flex: 1 1 150px; font-size: 12.5px; letter-spacing: 0.04em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 62%, transparent)">{{ r.label }}</span>
+                <span style="flex: 2 1 200px; min-width: 0; font-size: 15px; line-height: 1.55">{{ r.value }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showStepNav }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--color-divider)">
+          <button type="button" class="btn btn-primary" style="min-height: 50px; flex: 1 1 190px" onClick="{{ stepNext }}">{{ nextLabel }}</button>
+          <sc-if value="{{ stepOptional }}" hint-placeholder-val="{{ false }}">
+            <button type="button" class="btn btn-secondary" style="min-height: 50px" onClick="{{ skipStep }}">Skip this step</button>
+          </sc-if>
+          <button type="button" class="btn btn-ghost" style="min-height: 50px" onClick="{{ saveAndExit }}">Save &amp; finish later</button>
+        </div>
+        <p style="margin: 12px 0 0; font-size: 12.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 62%, transparent)">Saved on this device as you type. Nothing here is public.</p>
+      </sc-if>
+    </main>
+  </sc-if>
+
+  <!-- ============ LITERATURE ============ -->
+  <sc-if value="{{ isLiterature }}" hint-placeholder-val="{{ false }}">
+    <main class="pt-wrap" style="padding-block: 20px 30px">
+      <h1 style="margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 25px; line-height: 1.2; letter-spacing: -0.015em">Literature order</h1>
+      <p style="margin: 8px 0 0; font-size: 14.5px; line-height: 1.62; color: color-mix(in srgb, var(--color-text) 72%, transparent)">Area cost, no markup. Orders close the Friday before area and are picked up at 525 N Santiam Hwy, Lebanon — pay at pickup.</p>
+      <div style="margin-top: 20px; border-top: 2px solid var(--color-text)">
+        <sc-for list="{{ litSections }}" as="sec" hint-placeholder-count="8">
+          <div style="border-bottom: 1px solid var(--color-divider)">
+            <button type="button" onClick="{{ sec.onToggle }}" style="appearance: none; cursor: pointer; width: 100%; box-sizing: border-box; display: flex; gap: 12px; align-items: center; justify-content: space-between; background: transparent; border: 0; padding: 15px 0; min-height: 56px; text-align: left; font-family: var(--font-body); color: var(--color-text)">
+              <span style="font-family: var(--font-heading); font-weight: 600; font-size: 16.5px; letter-spacing: -0.01em">{{ sec.name }}</span>
+              <span style="display: flex; align-items: center; gap: 12px">
+                <span style="font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 64%, transparent)">{{ sec.count }}</span>
+                <span style="font-size: 19px; color: var(--color-accent-700)">{{ sec.mark }}</span>
+              </span>
+            </button>
+            <sc-for list="{{ sec.rows }}" as="p" hint-placeholder-count="0">
+              <div style="display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; padding: 12px 0 12px 12px; border-top: 1px solid var(--color-divider)">
+                <div style="flex: 2 1 180px; min-width: 0">
+                  <p style="margin: 0; font-size: 14.5px; line-height: 1.4">{{ p.name }}</p>
+                  <p style="margin: 3px 0 0; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 66%, transparent)">{{ p.meta }}</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px">
+                  <button type="button" onClick="{{ p.dec }}" aria-label="One fewer" style="appearance: none; cursor: pointer; width: 44px; height: 44px; border: 1px solid var(--color-divider); background: var(--color-surface); border-radius: var(--radius-sm); font-size: 19px; color: var(--color-text)">−</button>
+                  <span style="min-width: 26px; text-align: center; font-family: var(--font-heading); font-weight: 600; font-size: 16px; font-feature-settings: 'tnum' 1">{{ p.qty }}</span>
+                  <button type="button" onClick="{{ p.inc }}" aria-label="One more" style="appearance: none; cursor: pointer; width: 44px; height: 44px; border: 1px solid var(--color-accent); background: var(--color-accent-100); border-radius: var(--radius-sm); font-size: 19px; color: var(--color-accent-700)">+</button>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ sec.yearHint }}" hint-placeholder-val="{{ false }}">
+              <p style="margin: 0 0 12px; font-size: 12.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 64%, transparent)">{{ sec.yearHint }}</p>
+            </sc-if>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px">
+              <sc-for list="{{ sec.years }}" as="y" hint-placeholder-count="0">
+                <button type="button" onClick="{{ y.onClick }}" style="appearance: none; cursor: pointer; min-width: 52px; min-height: 46px; padding: 0 10px; border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 14px; border: 1px solid {{ y.border }}; background: {{ y.bg }}; color: {{ y.color }}">{{ y.label }}</button>
+              </sc-for>
+            </div>
+            <sc-for list="{{ sec.picked }}" as="p" hint-placeholder-count="0">
+              <div style="display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; padding: 12px 0 12px 12px; border-top: 1px solid var(--color-divider)">
+                <div style="flex: 2 1 180px; min-width: 0">
+                  <p style="margin: 0; font-size: 14.5px; line-height: 1.4">{{ p.name }}</p>
+                  <p style="margin: 3px 0 0; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 66%, transparent)">{{ p.price }}</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px">
+                  <button type="button" onClick="{{ p.dec }}" aria-label="One fewer" style="appearance: none; cursor: pointer; width: 44px; height: 44px; border: 1px solid var(--color-divider); background: var(--color-surface); border-radius: var(--radius-sm); font-size: 19px; color: var(--color-text)">−</button>
+                  <span style="min-width: 26px; text-align: center; font-family: var(--font-heading); font-weight: 600; font-size: 16px; font-feature-settings: 'tnum' 1">{{ p.qty }}</span>
+                  <button type="button" onClick="{{ p.inc }}" aria-label="One more" style="appearance: none; cursor: pointer; width: 44px; height: 44px; border: 1px solid var(--color-accent); background: var(--color-accent-100); border-radius: var(--radius-sm); font-size: 19px; color: var(--color-accent-700)">+</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin: 16px 0 0; font-size: 12.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 64%, transparent)">Special orders go to literature@lbana.org and ride along with the next area order — allow about four weeks.</p>
+      <div style="position: sticky; bottom: 74px; margin-top: 18px; background: var(--color-bg); padding-top: 12px; border-top: 2px solid var(--color-text)">
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between">
+          <div>
+            <p style="margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 19px">{{ literatureTotal }}</p>
+            <p style="margin: 3px 0 0; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 64%, transparent)">{{ literatureLines }}</p>
+          </div>
+          <button type="button" class="btn btn-primary" style="min-height: 50px" onClick="{{ submitOrder }}" disabled="{{ literatureEmpty }}">Send order for pickup</button>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ ORDER SENT ============ -->
+  <sc-if value="{{ isOrderDone }}" hint-placeholder-val="{{ false }}">
+    <main class="pt-wrap" style="padding-block: 28px 30px">
+      <h1 style="margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 26px; line-height: 1.2; letter-spacing: -0.015em">Order sent</h1>
+      <p style="margin: 10px 0 0; font-size: 15px; line-height: 1.65; max-width: 46ch; color: color-mix(in srgb, var(--color-text) 74%, transparent)">Filed under {{ activeGroup }}, total {{ orderTotal }}. Orders close the Friday before area; pick it up at 525 N Santiam Hwy, Lebanon and pay then.</p>
+      <p style="margin: 8px 0 0; font-size: 13px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 66%, transparent)">One more step: send it to the literature chair. The button below opens your mail app with the order already written out.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px">
+        <a href="{{ orderMailto }}" class="btn btn-primary" style="display: inline-flex; align-items: center; min-height: 48px; text-decoration: none">Email the literature chair</a>
+        <button type="button" class="btn btn-secondary" style="min-height: 48px" onClick="{{ printReport }}">Print or save as PDF</button>
+        <button type="button" class="btn btn-ghost" style="min-height: 48px" onClick="{{ goHome }}">Back to the portal</button>
+      </div>
+      <div class="pt-printable" style="margin-top: 28px; border-top: 2px solid var(--color-text)">
+        <img class="pt-printhead" src="assets/lbana-logo.png" alt="" style="display: none; width: 64px; height: 64px; object-fit: contain; margin: 0 0 8px">
+        <p class="pt-printhead" style="display: none; margin: 0 0 4px; font-family: var(--font-heading); font-weight: 600; font-size: 20px">Linn Benton Area &mdash; Literature Order</p>
+        <p class="pt-printhead" style="display: none; margin: 0 0 14px; font-size: 13px">{{ activeGroup }} &middot; {{ printedOn }}</p>
+        <sc-for list="{{ orderRows }}" as="r" hint-placeholder-count="3">
+          <div style="display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--color-divider)">
+            <span style="flex: 2 1 200px; min-width: 0; font-size: 14.5px; line-height: 1.5">{{ r.label }}</span>
+            <span style="flex: 1 1 130px; font-size: 14.5px; font-feature-settings: 'tnum' 1">{{ r.value }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ SHORT FORMS ============ -->
+  <sc-if value="{{ isForm }}" hint-placeholder-val="{{ false }}">
+    <main class="pt-wrap" style="padding-block: 12px 30px">
+      <button type="button" onClick="{{ backFromScreen }}" style="appearance: none; cursor: pointer; background: transparent; border: 0; padding: 8px 0; margin: 0 0 6px; font-family: var(--font-body); font-size: 13.5px; color: var(--color-accent-700)">Back</button>
+      <h1 style="margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 25px; line-height: 1.2; letter-spacing: -0.015em">{{ formTitle }}</h1>
+      <p style="margin: 8px 0 0; font-size: 14.5px; line-height: 1.62; color: color-mix(in srgb, var(--color-text) 72%, transparent)">{{ formHint }}</p>
+      <sc-if value="{{ formFromAccount }}" hint-placeholder-val="{{ false }}">
+        <p style="margin: 14px 0 0; padding: 10px 14px; background: var(--color-accent-100); border-left: 3px solid var(--color-accent); font-size: 13px; line-height: 1.6">{{ accountLine }}. Changing the contact here changes who the web servant issues the next access code to.</p>
+      </sc-if>
+      <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 24px">
+        <sc-for list="{{ formFields }}" as="f" hint-placeholder-count="4">
+          <div>
+            <label for="{{ f.key }}" style="display: block; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 8px">{{ f.label }}</label>
+            <sc-if value="{{ f.isArea }}" hint-placeholder-val="{{ false }}">
+              <textarea class="input" id="{{ f.key }}" rows="4" onChange="{{ f.onInput }}" placeholder="{{ f.placeholder }}" style="width: 100%; box-sizing: border-box; resize: vertical; min-height: 96px"></textarea>
+            </sc-if>
+            <sc-if value="{{ f.isText }}" hint-placeholder-val="{{ true }}">
+              <input class="input" id="{{ f.key }}" type="text" onChange="{{ f.onInput }}" placeholder="{{ f.placeholder }}" style="width: 100%; box-sizing: border-box; min-height: 48px">
+            </sc-if>
+            <sc-if value="{{ f.isLocked }}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; justify-content: space-between; min-height: 48px; box-sizing: border-box; padding: 12px 14px; background: var(--color-neutral-100); border: 1px solid var(--color-divider)">
+                <span style="font-size: 15px">{{ f.lockedValue }}</span>
+                <span style="font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; color: color-mix(in srgb, var(--color-text) 60%, transparent)">From your login</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{ f.isImage }}" hint-placeholder-val="{{ false }}">
+              <label for="{{ f.key }}" style="display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; cursor: pointer; box-sizing: border-box; padding: 14px; background: var(--color-surface); border: 1px dashed var(--color-divider)">
+                <span style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; background: var(--color-accent-100); border: 1px solid var(--color-accent); color: var(--color-accent-700); font-size: 14.5px">Choose a photo</span>
+                <span style="flex: 1 1 140px; min-width: 0; font-size: 13.5px; line-height: 1.55; color: color-mix(in srgb, var(--color-text) 68%, transparent); overflow-wrap: anywhere">{{ f.imageName }}</span>
+              </label>
+              <input id="{{ f.key }}" type="file" accept="image/jpeg,image/png,image/webp" onChange="{{ f.onPick }}" style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none">
+              <sc-if value="{{ f.hasImage }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top: 12px">
+                  {{ f.preview }}
+                  <button type="button" class="btn btn-ghost" style="min-height: 44px; margin-top: 8px" onClick="{{ f.onClearImage }}">Remove</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ f.help }}" hint-placeholder-val="{{ false }}">
+                <p style="margin: 8px 0 0; font-size: 12.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 66%, transparent)">{{ f.help }}</p>
+              </sc-if>
+            </sc-if>
+          </div>
+        </sc-for>
+        <sc-if value="{{ imageError }}" hint-placeholder-val="{{ false }}">
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.6; padding: 12px 14px; background: var(--color-accent-100); border-left: 2px solid var(--color-accent); color: var(--color-accent-800)">{{ imageError }}</p>
+        </sc-if>
+        <div><button type="button" class="btn btn-primary" style="min-height: 50px" onClick="{{ submitForm }}">{{ formSubmitLabel }}</button></div>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ MORE ============ -->
+  <sc-if value="{{ isMore }}" hint-placeholder-val="{{ false }}">
+    <main class="pt-wrap" style="padding-block: 20px 30px">
+      <h1 style="margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 25px; line-height: 1.2; letter-spacing: -0.015em">Everything else</h1>
+      <div style="margin-top: 20px; border-top: 2px solid var(--color-text)">
+        <sc-for list="{{ moreItems }}" as="m" hint-placeholder-count="6">
+          <button type="button" onClick="{{ m.onClick }}" style="appearance: none; cursor: pointer; text-align: left; width: 100%; display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; justify-content: space-between; padding: 16px 0; min-height: 56px; background: transparent; border: 0; border-bottom: 1px solid var(--color-divider); font-family: var(--font-body); color: var(--color-text)">
+            <span style="flex: 1 1 190px; font-family: var(--font-heading); font-weight: 600; font-size: 16.5px; letter-spacing: -0.01em">{{ m.label }}</span>
+            <span style="flex: 2 1 220px; font-size: 12.5px; line-height: 1.5; color: color-mix(in srgb, var(--color-text) 66%, transparent)">{{ m.note }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <div style="margin-top: 26px; background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-md); padding: 16px">
+        <p style="margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 16px; letter-spacing: -0.01em">Keep it on your home screen</p>
+        <p style="margin: 7px 0 0; font-size: 13.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 70%, transparent)">Add the portal to your phone and it opens like an app. Agenda, minutes and the document library stay readable with no signal, and an unfinished report survives a dead connection.</p>
+      </div>
+      <div style="margin-top: 12px; background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-md); padding: 16px">
+        <p style="margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 16px; letter-spacing: -0.01em">Something broken?</p>
+        <p style="margin: 7px 0 0; font-size: 13.5px; line-height: 1.6; color: color-mix(in srgb, var(--color-text) 70%, transparent)">This is a test version. Tell the web servant what went wrong and what you were doing when it did.</p>
+        <a href="{{ feedbackHref }}" class="btn btn-secondary" style="display: inline-flex; align-items: center; min-height: 46px; margin-top: 12px; text-decoration: none">Send feedback</a>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ DOCUMENT LIBRARY ============ -->
+  <sc-if value="{{ isDocs }}" hint-placeholder-val="{{ false }}">
+    <main class="pt-wrap" style="padding-block: 12px 30px">
+      <button type="button" onClick="{{ backFromScreen }}" style="appearance: none; cursor: pointer; background: transparent; border: 0; padding: 8px 0; margin: 0 0 6px; font-family: var(--font-body); font-size: 13.5px; color: var(--color-accent-700)">Back</button>
+      <h1 style="margin: 0; font-family: var(--font-heading); font-weight: 600; font-size: 25px; line-height: 1.2; letter-spacing: -0.015em">{{ docsTitle }}</h1>
+      <p style="margin: 8px 0 0; font-size: 14.5px; line-height: 1.62; color: color-mix(in srgb, var(--color-text) 72%, transparent)">Saved to this device the first time you open them.</p>
+      <div style="margin-top: 20px; border-top: 2px solid var(--color-text)">
+        <sc-for list="{{ docs }}" as="d" hint-placeholder-count="6">
+          <a href="{{ d.href }}" style="display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; justify-content: space-between; padding: 15px 0; min-height: 54px; border-bottom: 1px solid var(--color-divider); text-decoration: none; color: var(--color-text)" style-hover="background: var(--color-accent-100)">
+            <span style="flex: 1 1 200px; font-family: var(--font-heading); font-weight: 600; font-size: 16px; letter-spacing: -0.01em">{{ d.name }}</span>
+            <span style="flex: 1 1 140px; font-size: 12.5px; color: color-mix(in srgb, var(--color-text) 66%, transparent)">{{ d.note }}</span>
+            <span style="font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-accent-700)">{{ d.kind }}</span>
+          </a>
+        </sc-for>
+      </div>
+    </main>
+  </sc-if>
+
+  <nav style="position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--color-divider); border-top: 1px solid var(--color-divider)">
+    <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+      <button type="button" onClick="{{ t.onClick }}" style="appearance: none; cursor: pointer; border: 0; min-height: 62px; padding: 8px 4px 10px; background: var(--color-surface); font-family: var(--font-body); font-size: 12px; letter-spacing: 0.02em; color: {{ t.color }}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px">
+        <span style="width: 22px; height: 3px; background: {{ t.mark }}"></span>
+        {{ t.label }}
+      </button>
+    </sc-for>
+  </nav>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:420,&quot;height&quot;:900}}">
+const GROUPS = ["Keep It Simple", "New Beginnings", "Living Clean", "Freedom Group", "Friday Night Live", "Saturday Sunrise"];
+
+const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const DAY_SHORT = ["S", "M", "Tu", "W", "Th", "F", "Sa"];
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+const STEPS = [
+  { title: "Which group, and which month?", hint: "Reports are filed under the group name only. One report per group each month.",
+    fields: [
+      { key: "group", label: "Group", type: "text", placeholder: "Keep It Simple", help: "Prefilled from the group you picked at the top." },
+      { key: "month", label: "Month", type: "text", placeholder: "September", help: "Prefilled to this month." }
+    ] },
+  { title: "When and where does the group meet?", hint: "Tap every day the group meets, then give each one a time.",
+    fields: [
+      { key: "days", label: "Meeting days", type: "days", help: "A group with two meetings a week can report both here." },
+      { key: "place", label: "Meeting place", type: "text", placeholder: "Albany First Methodist, room 4", help: "" }
+    ] },
+  { title: "Is the group still meeting?", hint: "Anything that changed since last month — time, place, format.",
+    fields: [
+      { key: "status", label: "Status", type: "choice", options: ["No changes", "Something changed", "Group has closed"], help: "" },
+      { key: "changes", label: "What changed", type: "area", placeholder: "New location, time change, format…", help: "Leave blank if nothing changed. A location or time change also needs a meeting change request." }
+    ] },
+  { title: "How is attendance?", hint: "Rough numbers are fine — nobody is counting heads.",
+    fields: [
+      { key: "counts", label: "Counts", type: "grid", help: "Newcomers are the people picking up a white keytag.",
+        cells: [
+          { key: "attendance", label: "Average attendance", placeholder: "18" },
+          { key: "newcomers", label: "Newcomers", placeholder: "3" },
+          { key: "visitors", label: "Visitors", placeholder: "2" }
+        ] }
+    ] },
+  { title: "Clean time celebrations", hint: "How many at each length this month. Leave the rest blank.",
+    fields: [
+      { key: "birthdays", label: "Celebrations", type: "grid", help: "",
+        cells: [
+          { key: "bd-24h", label: "24 hours" },
+          { key: "bd-30d", label: "30 days" },
+          { key: "bd-60d", label: "60 days" },
+          { key: "bd-90d", label: "90 days" },
+          { key: "bd-6m", label: "6 months" },
+          { key: "bd-9m", label: "9 months" },
+          { key: "bd-1y", label: "1 year" },
+          { key: "bd-18m", label: "18 months" },
+          { key: "bd-my", label: "Multiple years" }
+        ] }
+    ] },
+  { title: "Schedules", hint: "What the group took last month and what came back.",
+    fields: [
+      { key: "schedules", label: "Counts", type: "grid", help: "",
+        cells: [
+          { key: "sch-up", label: "Picked up" },
+          { key: "sch-left", label: "Left over" }
+        ] },
+      { key: "sch-changes", label: "Schedule changes", type: "area", placeholder: "Anything wrong on the printed schedule", help: "" }
+    ] },
+  { title: "Group finances", hint: "Optional. Skip the whole step if your treasurer reports separately.", optional: true,
+    fields: [
+      { key: "fin-open", label: "Beginning balance", type: "number", placeholder: "$0.00", help: "" },
+      { key: "income", label: "Income", type: "grid", help: "", qualify: true,
+        cells: [
+          { key: "in-collection", label: "Collection" },
+          { key: "in-lit", label: "Literature" },
+          { key: "in-other", label: "Other" }
+        ] },
+      { key: "expenses", label: "Expenses", type: "grid", help: "", qualify: true,
+        cells: [
+          { key: "ex-rent", label: "Rent" },
+          { key: "ex-lit", label: "Literature" },
+          { key: "ex-supplies", label: "Supplies" },
+          { key: "ex-asc", label: "ASC donation" },
+          { key: "ex-rsc", label: "RSC donation" },
+          { key: "ex-naws", label: "NAWS donation" },
+          { key: "ex-other", label: "Other" }
+        ] },
+      { key: "fin-close", label: "Closing out", type: "grid", help: "The ASC donation here is the group's own record. The treasurer still logs the donation separately.",
+        cells: [
+          { key: "fin-end", label: "Ending balance" },
+          { key: "fin-reserve", label: "Prudent reserve" }
+        ] }
+    ] },
+  { title: "Group positions", hint: "Filled or open — no names, so area knows where to point people looking for service.",
+    fields: [
+      { key: "officers", label: "Positions", type: "positions", help: "",
+        cells: [
+          { key: "of-gsr", label: "GSR" },
+          { key: "of-altgsr", label: "Alt-GSR" },
+          { key: "of-treasurer", label: "Treasurer" },
+          { key: "of-secretary", label: "Secretary" },
+          { key: "of-lit", label: "Literature" },
+          { key: "of-altlit", label: "Alt-Literature" }
+        ] }
+    ] },
+  { title: "Anything the group needs from area?", hint: "Concerns, questions, or a request for the committee.",
+    fields: [
+      { key: "concerns", label: "Concerns or asks", type: "area", placeholder: "", help: "" }
+    ] },
+  { title: "Comments", hint: "The last thing the secretary reads from your group.",
+    fields: [
+      { key: "other", label: "Comments", type: "area", placeholder: "", help: "" }
+    ] }
+];
+
+// 2026 area order form, at cost. Prices are as printed on the paper form.
+const KEYTAG_NAMES = [
+  ["Welcome", "White"], ["30 Days", "Orange"], ["60 Days", "Green"], ["90 Days", "Red"],
+  ["6 Months", "Blue"], ["9 Months", "Yellow"], ["1 Year", "Moonglow"], ["18 Months", "Grey"],
+  ["Multiple Years", "Black"]
+];
+
+const MEDALLION_YEARS = ["1 Year", "18 Months"].concat(
+  Array.apply(null, { length: 39 }).map((_, i) => (i + 2) + " Years")
+).concat(["Eternity"]);
+
+const LIT_SECTIONS = [
+  { id: "books", name: "Books", items: [
+    { id: "bk-bt", name: "Basic Text", detail: "Hard or soft cover", cents: 1600 },
+    { id: "bk-iw", name: "It Works: How and Why", detail: "Hard or soft cover", cents: 1300 },
+    { id: "bk-jft", name: "Just for Today", detail: "Daily meditations, soft cover", cents: 1300 },
+    { id: "bk-ig", name: "An Introductory Guide to Narcotics Anonymous", detail: "", cents: 300 },
+    { id: "bk-swg", name: "Step Working Guide", detail: "", cents: 1200 },
+    { id: "bk-mh", name: "Miracles Happen", detail: "", cents: 1550 },
+    { id: "bk-spad", name: "Spiritual Principles a Day", detail: "", cents: 1600 },
+    { id: "bk-lc", name: "Living Clean", detail: "Hard or soft cover", cents: 1400 },
+    { id: "bk-gp", name: "Guiding Principles", detail: "", cents: 1400 },
+    { id: "bk-sk", name: "NA Survival Kit", detail: "", cents: 2100 }
+  ] },
+  { id: "ips", name: "Pamphlets & IPs", items: [
+    { id: "ip-1", name: "IP #1 Who, What, How, and Why", detail: "", cents: 35 },
+    { id: "ip-2", name: "IP #2 The Group", detail: "", cents: 45 },
+    { id: "ip-5", name: "IP #5 Another Look", detail: "", cents: 35 },
+    { id: "ip-6", name: "IP #6 Recovery and Relapse", detail: "", cents: 35 },
+    { id: "ip-7", name: "IP #7 Am I an Addict?", detail: "", cents: 35 },
+    { id: "ip-8", name: "IP #8 Just for Today", detail: "", cents: 35 },
+    { id: "ip-9", name: "IP #9 Living the Program", detail: "", cents: 35 },
+    { id: "ip-11", name: "IP #11 Sponsorship", detail: "Revised", cents: 35 },
+    { id: "ip-12", name: "IP #12 The Triangle of Self-Obsession", detail: "", cents: 35 },
+    { id: "ip-13", name: "IP #13 By Young Addicts, for Young Addicts", detail: "", cents: 45 },
+    { id: "ip-14", name: "IP #14 One Addict's Experience", detail: "", cents: 35 },
+    { id: "ip-15", name: "IP #15 PI and the NA Member", detail: "", cents: 35 },
+    { id: "ip-16", name: "IP #16 For the Newcomer", detail: "", cents: 35 },
+    { id: "ip-17", name: "IP #17 For Those in Treatment", detail: "", cents: 45 },
+    { id: "ip-19", name: "IP #19 Self-Acceptance", detail: "", cents: 35 },
+    { id: "ip-20", name: "IP #20 H&I and the NA Member", detail: "", cents: 35 },
+    { id: "ip-21", name: "IP #21 The Loner", detail: "", cents: 45 },
+    { id: "ip-22", name: "IP #22 Welcome to NA", detail: "", cents: 35 },
+    { id: "ip-23", name: "IP #23 Staying Clean on the Outside", detail: "", cents: 35 },
+    { id: "ip-24", name: "IP #24 Money Matters: Self-Support in NA", detail: "", cents: 60 },
+    { id: "ip-26", name: "IP #26 Accessibility for Those with Additional Needs", detail: "", cents: 35 },
+    { id: "ip-27", name: "IP #27 For the Parents or Guardians of Young People in NA", detail: "", cents: 45 },
+    { id: "ip-28", name: "IP #28 Funding NA Services", detail: "", cents: 50 },
+    { id: "ip-29", name: "IP #29 Introduction to NA Meetings", detail: "", cents: 35 },
+    { id: "ip-30", name: "IP #30 Mental Health", detail: "", cents: 45 }
+  ] },
+  { id: "booklets", name: "Booklets", items: [
+    { id: "bl-12c", name: "Twelve Concepts for NA Service", detail: "", cents: 300 },
+    { id: "bl-white", name: "NA White Booklet", detail: "", cents: 150 },
+    { id: "bl-illness", name: "In Times of Illness", detail: "", cents: 400 },
+    { id: "bl-group", name: "The Group Booklet", detail: "Revised", cents: 150 },
+    { id: "bl-walls", name: "Behind the Walls", detail: "", cents: 150 },
+    { id: "bl-4th", name: "Fourth Step Guide", detail: "", cents: 150 },
+    { id: "bl-resource", name: "NA: A Resource in Your Community", detail: "", cents: 55 }
+  ] },
+  { id: "service", name: "Service pamphlets", items: [
+    { id: "sp-business", name: "Group Business Meetings", detail: "", cents: 35 },
+    { id: "sp-servants", name: "Group Trusted Servants: Roles and Responsibilities", detail: "", cents: 35 },
+    { id: "sp-disruptive", name: "Disruptive and Violent Behavior", detail: "", cents: 35 },
+    { id: "sp-medication", name: "NA Groups and Medication", detail: "", cents: 45 },
+    { id: "sp-leadership", name: "Leadership in NA Service", detail: "", cents: 45 },
+    { id: "sp-social", name: "Social Media", detail: "", cents: 45 }
+  ] },
+  { id: "specialty", name: "Specialty items", items: [
+    { id: "sy-readings", name: "Group Readings", detail: "Set of 7", cents: 600 },
+    { id: "sy-handbook", name: "Treasurer's Handbook", detail: "Revised", cents: 300 },
+    { id: "sy-workbook", name: "Group Treasurer's Workbook", detail: "Revised", cents: 300 },
+    { id: "sy-pad", name: "Group Treasurer's Record Pad", detail: "Revised, records for 13 months", cents: 100 }
+  ] },
+  { id: "keytags", name: "Keytags", items: KEYTAG_NAMES.map((k, i) => ({
+    id: "kt-" + i, name: k[0], detail: k[1], cents: 80
+  })) },
+  { id: "chips", name: "Chips", items: KEYTAG_NAMES.map((k, i) => ({
+    id: "cp-" + i, name: k[0], detail: k[1], cents: 55
+  })) },
+  { id: "medallions", name: "Bronze medallions", medallions: true, items: MEDALLION_YEARS.map((y, i) => ({
+    id: "md-" + i, name: y, detail: "", cents: 500
+  })) }
+];
+
+const LIT_ITEMS = [].concat.apply([], LIT_SECTIONS.map(s => s.items));
+
+const money = (cents) => "$" + (cents / 100).toFixed(2);
+
+const FORMS = {
+  change: { title: "Meeting change request", hint: "New group, a time change, or a room that moved. This updates the meeting database and the printed schedule.", submit: "Send the change",
+    fields: [
+      { key: "ch-group", label: "Group name", type: "text", placeholder: "Keep It Simple" },
+      { key: "ch-what", label: "What is changing", type: "text", placeholder: "Time, location, format, or a new group" },
+      { key: "ch-new", label: "New details", type: "area", placeholder: "New day, time, address, and when it takes effect" },
+      { key: "ch-when", label: "Effective date", type: "text", placeholder: "First Sunday in September" }
+    ] },
+  event: { title: "Submit an event", hint: "Goes to the activities chair for approval, then appears on the calendar at lbana.org — no separate posting step.", submit: "Send for review",
+    fields: [
+      { key: "ev-name", label: "Event name", type: "text", placeholder: "Unity Day Picnic" },
+      { key: "ev-category", label: "Category", type: "text", placeholder: "Area event, campout, speaker jam, dance" },
+      { key: "ev-start", label: "Starts", type: "text", placeholder: "August 22, 11:00 AM" },
+      { key: "ev-end", label: "Ends", type: "text", placeholder: "August 22, 6:00 PM" },
+      { key: "ev-venue", label: "Venue", type: "text", placeholder: "Bryant Park" },
+      { key: "ev-address", label: "Address", type: "text", placeholder: "1900 SW 3rd Ave, Albany, OR" },
+      { key: "ev-what", label: "Description", type: "area", placeholder: "What's happening, what to bring, cost if any" },
+      { key: "ev-flyer", label: "Flyer", type: "image", placeholder: "", help: "Optional. JPG or PNG — a PDF won't go through. If yours is a PDF, screenshot a page and send that." },
+      { key: "ev-contact", label: "Contact for questions", type: "text", placeholder: "Email or phone the activities chair can use" }
+    ] },
+  donation: { title: "Log a donation", hint: "Group treasurers record what the group is sending. The area treasurer confirms it against the deposit.", submit: "Log it",
+    fields: [
+      { key: "dn-amount", label: "Amount", type: "text", placeholder: "$120.00" },
+      { key: "dn-method", label: "How it's being sent", type: "text", placeholder: "Cash at area, check, PayPal" },
+      { key: "dn-note", label: "Note", type: "area", placeholder: "Anything the treasurer should know" }
+    ] },
+  contact: { title: "Group contact", hint: "Who area reaches when something needs asking. Submit a new contact or update the one on file — this is not published, it stays with the secretary and the PR chair.", submit: "Send contact details",
+    fields: [
+      { key: "gc-group", label: "Group name", type: "text", placeholder: "Keep It Simple" },
+      { key: "gc-role", label: "Service position", type: "text", placeholder: "GSR, alternate GSR, treasurer" },
+      { key: "gc-name", label: "First name and last initial", type: "text", placeholder: "Dana R." },
+      { key: "gc-phone", label: "Phone", type: "text", placeholder: "(541) 555-0134" },
+      { key: "gc-email", label: "Email", type: "text", placeholder: "name@example.com" },
+      { key: "gc-note", label: "Replacing someone?", type: "area", placeholder: "Who this replaces, and when the change took effect" }
+    ] },
+  motion: { title: "Action suggestion", hint: "Brought to the floor at the next area service meeting. A suggestion needs someone to make it and someone to second it.", submit: "Submit to the agenda",
+    fields: [
+      { key: "mo-date", label: "Suggestion date", type: "text", placeholder: "September 7" },
+      { key: "mo-by", label: "Suggestion made by", type: "text", placeholder: "First name and last initial" },
+      { key: "mo-second", label: "Second made by", type: "text", placeholder: "First name and last initial" },
+      { key: "mo-nature", label: "Nature of the suggestion", type: "area", placeholder: "That the area…" },
+      { key: "mo-intent", label: "Intent of the suggestion", type: "area", placeholder: "What this is meant to accomplish" },
+      { key: "mo-cost", label: "Financial impact", type: "text", placeholder: "None, or an amount" }
+    ] },
+  action: { title: "Record action taken", hint: "Officers only. What the body decided, recorded against the suggestion after it was heard.", submit: "Save the outcome",
+    fields: [
+      { key: "ac-order", label: "Order #", type: "text", placeholder: "As read from the agenda" },
+      { key: "ac-which", label: "Which suggestion", type: "text", placeholder: "Nature of the suggestion, in a few words" },
+      { key: "ac-taken", label: "Action taken", type: "area", placeholder: "Passed, failed, tabled, referred — and any vote count" }
+    ] }
+};
+
+const DOCS = {
+  library: { title: "Document library", items: [
+    { name: "Area Guidelines", note: "How Linn Benton conducts service business", kind: "PDF", href: "#" },
+    { name: "GSR Report Form", note: "Paper version of this flow", kind: "PDF", href: "#" },
+    { name: "Literature Order Form", note: "Current-year area pricing", kind: "PDF", href: "#" },
+    { name: "Group Finance Setup", note: "For new treasurers", kind: "PDF", href: "#" },
+    { name: "Treasurer's Handbook", note: "NA World Services", kind: "PDF", href: "#" },
+    { name: "Twelve Concepts of Service", note: "Reference", kind: "PDF", href: "#" }
+  ] },
+  agenda: { title: "Agenda & minutes", items: [
+    { name: "September agenda", note: "First Sunday, ASC at 2:00 PM", kind: "Current", href: "#" },
+    { name: "August minutes", note: "Approved", kind: "PDF", href: "#" },
+    { name: "July minutes", note: "Approved", kind: "PDF", href: "#" },
+    { name: "June minutes", note: "Approved", kind: "PDF", href: "#" },
+    { name: "Treasurer's report, Q2", note: "Income and expense summary", kind: "PDF", href: "#" }
+  ] }
+};
+
+const BMLT_URL = "https://bmlt.wszf.org/main_server/client_interface/json/?switcher=GetSearchResults&services=35";
+const GROUPS_KEY = "lbana-portal-groups-v1";
+const DRAFT_KEY = "lbana-portal-draft-v1";
+const DONE_KEY = "lbana-portal-submitted-v2";
+
+class Component extends DCLogic {
+  state = {
+    page: "home", step: 0, group: GROUPS[0], groupMenu: false, officer: false,
+    draft: {}, hasDraft: false, submitted: [], qty: {}, openSec: { books: true },
+    images: {}, imageError: "",
+    offline: false, formKind: "change", docKind: "library"
+  };
+
+  componentDidMount() {
+    try {
+      const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || "null");
+      const s = JSON.parse(localStorage.getItem(DONE_KEY) || "null");
+      if (d && d.values) this.setState({ draft: d.values, hasDraft: true, step: d.step || 0 });
+      if (Array.isArray(s)) this.setState({ submitted: s });
+    } catch (e) {}
+    // The officer view is reached by an unlisted URL for the test: ?officer=1
+    try {
+      if (/[?&]officer=1/.test(window.location.search)) this.setState({ officer: true });
+    } catch (e) {}
+    this.loadGroups();
+    this.setState({ offline: typeof navigator !== "undefined" && navigator.onLine === false });
+    this._on = () => this.setState({ offline: false });
+    this._off = () => this.setState({ offline: true });
+    window.addEventListener("online", this._on);
+    window.addEventListener("offline", this._off);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("online", this._on);
+    window.removeEventListener("offline", this._off);
+  }
+
+  persistDraft(values, step) {
+    try { localStorage.setItem(DRAFT_KEY, JSON.stringify({ values, step, group: this.state.group, at: Date.now() })); } catch (e) {}
+  }
+
+  clearDraft() {
+    try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+    this.setState(s => ({ hasDraft: false, lastSubmitted: s.draft, draft: {}, step: 0 }));
+  }
+
+  persistDone(list) {
+    try { localStorage.setItem(DONE_KEY, JSON.stringify(list)); } catch (e) {}
+  }
+
+  setField = (key) => (e) => {
+    const v = e && e.target ? e.target.value : e;
+    const draft = Object.assign({}, this.state.draft, { [key]: v });
+    this.setState({ draft, hasDraft: true });
+    this.persistDraft(draft, this.state.step);
+  };
+
+  go = (page) => () => { this.setState({ page, groupMenu: false }); window.scrollTo(0, 0); };
+
+  today() {
+    const d = new Date();
+    return (d.getMonth() + 1) + "/" + d.getDate();
+  }
+
+  // Income and Expenses both carry "Literature" and "Other" cells, so a flat
+  // list of bare cell labels is unreadable on the review and printed report.
+  cellLabel(field, cell) {
+    return field.qualify ? field.label + " · " + cell.label : cell.label;
+  }
+
+  // Group names come from the area's BMLT root server. Cached so the list is
+  // there with no signal; if the fetch is blocked the GSR types the name in.
+  loadGroups() {
+    try {
+      const cached = JSON.parse(localStorage.getItem(GROUPS_KEY) || "null");
+      if (cached && cached.length) this.setState({ groups: cached, groupsLoaded: true, group: this.state.group || cached[0] });
+    } catch (e) {}
+    fetch(BMLT_URL)
+      .then(r => r.ok ? r.json() : Promise.reject(r.status))
+      .then(rows => {
+        const names = [];
+        (rows || []).forEach(m => {
+          const n = (m.meeting_name || "").trim();
+          if (n && names.indexOf(n) === -1) names.push(n);
+        });
+        names.sort();
+        if (!names.length) return Promise.reject("empty");
+        try { localStorage.setItem(GROUPS_KEY, JSON.stringify(names)); } catch (e) {}
+        this.setState(s => ({ groups: names, groupsLoaded: true, groupsFailed: false, group: names.indexOf(s.group) === -1 ? names[0] : s.group }));
+      })
+      .catch(() => this.setState(s => ({ groupsFailed: !(s.groups && s.groups.length) })));
+  }
+
+  // Flyer picker. There is no backend for the test, so the image is held in
+  // memory only — never in the draft, which lives in localStorage and would
+  // blow its quota. The submitted record keeps the filename; the file itself
+  // rides along when the GSR sends or prints.
+  pickImage = (key) => (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    if (!/^image\/(jpeg|png|webp)$/.test(file.type)) {
+      this.setState({ imageError: "That's not a JPG or PNG. A PDF won't go through — screenshot a page and send the image." });
+      return;
+    }
+    if (file.size > 8 * 1024 * 1024) {
+      this.setState({ imageError: "That image is over 8MB. Most phones can export a smaller copy." });
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => this.setState(s => ({
+      imageError: "",
+      images: Object.assign({}, s.images, { [key]: { name: file.name, url: reader.result } }),
+      draft: Object.assign({}, s.draft, { [key]: file.name })
+    }));
+    reader.readAsDataURL(file);
+  };
+
+  clearImage = (key) => () => this.setState(s => {
+    const images = Object.assign({}, s.images);
+    delete images[key];
+    const draft = Object.assign({}, s.draft);
+    delete draft[key];
+    return { images, draft, imageError: "" };
+  });
+
+  bump = (id, by) => () => this.setState(s => ({
+    qty: Object.assign({}, s.qty, { [id]: Math.max(0, (s.qty[id] || 0) + by) })
+  }));
+
+  daySummary(values) {
+    const v = values || {};
+    return DAYS.map((d, i) => v["day-" + i] ? (d + (v["time-" + i] ? " " + v["time-" + i] : "")) : null)
+      .filter(Boolean).join(", ");
+  }
+
+  flatRows(values) {
+    const out = [];
+    const val = (k) => (values[k] === "" || values[k] == null) ? "—" : String(values[k]);
+    STEPS.forEach(s => (s.fields || []).forEach(f => {
+      if (f.type === "days") out.push({ label: "Meeting days", value: this.daySummary(values) || "—" });
+      else if (f.cells) f.cells.forEach(c => out.push({ label: this.cellLabel(f, c), value: val(c.key) }));
+      else out.push({ label: f.label, value: val(f.key) });
+    }));
+    return out;
+  }
+
+  record(title, values, extra) {
+    const list = [Object.assign({ date: this.today(), title, group: this.state.group, state: "Submitted", mine: true, values: values || null }, extra || {})].concat(this.state.submitted);
+    this.setState({ submitted: list });
+    this.persistDone(list);
+  }
+
+  renderVals() {
+    const st = this.state;
+    const total = STEPS.length;
+    const onDone = st.step >= total + 1;
+    const onReview = st.step === total;
+    const onQuestions = st.step < total;
+
+    const stepDef = STEPS[Math.min(st.step, total - 1)];
+    const draftVal = (k) => st.draft[k] !== undefined ? st.draft[k]
+      : (k === "group" ? st.group : (k === "month" ? MONTHS[new Date().getMonth()] : ""));
+
+    const pick = (key, opts) => opts.map(o => ({
+      label: o,
+      onClick: () => this.setField(key)(o),
+      bg: draftVal(key) === o ? "var(--color-accent)" : "var(--color-surface)",
+      color: draftVal(key) === o ? "#fff" : "var(--color-text)",
+      border: draftVal(key) === o ? "var(--color-accent)" : "var(--color-divider)"
+    }));
+
+    const cellOf = (c) => ({
+      key: c.key, label: c.label, placeholder: c.placeholder || "",
+      value: draftVal(c.key), onInput: this.setField(c.key),
+      options: pick(c.key, c.options || ["Filled", "Open"])
+    });
+
+    const stepFields = (stepDef.fields || []).map(f => ({
+      key: f.key, label: f.label, help: f.help || "", placeholder: f.placeholder || "",
+      value: draftVal(f.key),
+      isText: f.type === "text", isNumber: f.type === "number", isArea: f.type === "area",
+      isChoice: f.type === "choice", isGrid: f.type === "grid", isDays: f.type === "days",
+      isPositions: f.type === "positions",
+      cells: (f.cells || []).map(cellOf),
+      dayToggles: DAYS.map((d, i) => {
+        const on = !!draftVal("day-" + i);
+        return {
+          label: DAY_SHORT[i],
+          onClick: () => this.setField("day-" + i)(on ? "" : "on"),
+          bg: on ? "var(--color-accent)" : "var(--color-surface)",
+          color: on ? "#fff" : "var(--color-text)",
+          border: on ? "var(--color-accent)" : "var(--color-divider)"
+        };
+      }),
+      dayTimes: DAYS.map((d, i) => ({ d, i })).filter(x => !!draftVal("day-" + x.i)).map(x => ({
+        label: x.d, value: draftVal("time-" + x.i), onInput: this.setField("time-" + x.i)
+      })),
+      onInput: this.setField(f.key),
+      options: pick(f.key, f.options || [])
+    }));
+
+    const reviewRows = [];
+    STEPS.forEach((s, i) => (s.fields || []).forEach(f => {
+      const push = (label, v) => reviewRows.push({
+        label, value: (v === "" || v == null) ? "—" : String(v), onEdit: () => this.setState({ step: i })
+      });
+      if (f.type === "days") push("Meeting days", this.daySummary(st.draft));
+      else if (f.cells) f.cells.forEach(c => push(this.cellLabel(f, c), draftVal(c.key)));
+      else push(f.label, draftVal(f.key));
+    }));
+
+    const qty = st.qty;
+    const cents = LIT_ITEMS.reduce((n, p) => n + (qty[p.id] || 0) * p.cents, 0);
+    const lines = LIT_ITEMS.reduce((n, p) => n + ((qty[p.id] || 0) > 0 ? 1 : 0), 0);
+
+    const form = FORMS[st.formKind];
+    const docSet = DOCS[st.docKind];
+
+    const tab = (id, label) => {
+      const active = st.page === id || (id === "more" && (st.page === "docs" || (st.page === "form" && st.returnTo === "more")));
+      return {
+        label, onClick: this.go(id),
+        color: active ? "var(--color-accent)" : "color-mix(in srgb, var(--color-text) 62%, transparent)",
+        mark: active ? "var(--color-accent)" : "transparent"
+      };
+    };
+
+    // Entering the report flow always normalises the step: a finished report
+    // (step past the last question) starts over, an unfinished one resumes.
+    const enterReport = () => {
+      this.setState(s => {
+        // Entering via tab or tile always starts fresh once a report is finished
+        // or was reopened for editing; only a live draft resumes mid-flow.
+        const stale = s.step >= STEPS.length || s.editingSubmitted;
+        return {
+          page: "report", groupMenu: false, editingSubmitted: false, submitting: false, advancing: false,
+          step: stale ? 0 : s.step,
+          draft: stale ? {} : s.draft
+        };
+      });
+      window.scrollTo(0, 0);
+    };
+
+    const openForm = (kind, from) => () => { this.setState({ page: "form", formKind: kind, groupMenu: false, returnTo: from || "home" }); window.scrollTo(0, 0); };
+    const openDocs = (kind, from) => () => { this.setState({ page: "docs", docKind: kind, groupMenu: false, returnTo: from || "more" }); window.scrollTo(0, 0); };
+
+    const mine = st.submitted.filter(s => st.officer ? true : s.group === st.group);
+
+    return {
+      isHome: st.page === "home", isReport: st.page === "report", isLiterature: st.page === "literature",
+      isForm: st.page === "form", isMore: st.page === "more", isDocs: st.page === "docs",
+      goHome: this.go("home"),
+      offline: st.offline,
+
+      activeGroup: st.group,
+      groupMenuClass: st.groupMenu ? "pt-drawer is-open" : "pt-drawer",
+      toggleGroupMenu: () => this.setState(s => ({ groupMenu: !s.groupMenu })),
+      groupsManual: st.groupsFailed,
+      groupTyped: st.group,
+      setGroupTyped: (e) => this.setState({ group: e.target.value }),
+      groupSourceNote: st.groupsFailed
+        ? "The meeting list didn't load. Type your group name."
+        : (st.groupsLoaded ? "From the area meeting list." : "Loading the meeting list…"),
+      groupOptions: (st.groups && st.groups.length ? st.groups : GROUPS).map(g => ({
+        label: g,
+        onClick: () => this.setState({ group: g, groupMenu: false }),
+        bg: g === st.group ? "var(--color-accent)" : "var(--color-surface)",
+        color: g === st.group ? "#fff" : "var(--color-text)",
+        border: g === st.group ? "var(--color-accent)" : "var(--color-divider)"
+      })),
+
+      tiles: [
+        { label: "Submit a report", note: "Guided, a few questions at a time", status: st.hasDraft ? "Draft saved" : "Not started", onClick: enterReport },
+        { label: "Literature order", note: "Pickup at the area meeting", status: cents > 0 ? "Order started" : "Area cost", onClick: this.go("literature") },
+        { label: "Meeting change", note: "Time, place, format or a new group", status: "Updates the schedule", onClick: openForm("change", "home") },
+        { label: "Submit an event", note: "Campouts, jams, anniversaries", status: "Goes to activities", onClick: openForm("event", "home") }
+      ],
+
+      hasDraft: st.hasDraft && st.step < total + 1,
+      draftNote: "Step " + Math.min(st.step + 1, total) + " of " + total + " · " + st.group,
+      resumeDraft: () => { this.setState({ page: "report", step: Math.min(st.step, total) }); window.scrollTo(0, 0); },
+      editSubmitted: () => {
+        this.setState(s => ({ page: "report", step: s.lastSubmitted ? total : 0, draft: s.lastSubmitted || s.draft, editingSubmitted: !!s.lastSubmitted }));
+        window.scrollTo(0, 0);
+      },
+      backFromScreen: this.go(st.returnTo === "more" ? "more" : "home"),
+
+      submissionsHeading: st.officer ? "All submissions" : "From this group",
+      roleLabel: st.officer ? "Viewing as officer" : "Viewing as GSR",
+      toggleRole: () => this.setState(s => ({ officer: !s.officer })),
+      submissions: mine.map((s, i) => ({
+        date: s.date, title: s.title, group: s.group, state: s.state,
+        editable: !!s.values,
+        onEdit: s.values ? () => {
+          this.setState({ page: "report", step: STEPS.length, draft: Object.assign({}, s.values), hasDraft: false, editingSubmitted: true });
+          window.scrollTo(0, 0);
+        } : () => {}
+      })),
+      noSubmissions: mine.length === 0,
+
+      submittedRows: Object.keys(st.lastSubmitted || {}).length
+        ? this.flatRows(st.lastSubmitted)
+        : reviewRows.map(r => ({ label: r.label, value: r.value })),
+      printReport: () => window.print(),
+      printedOn: new Date().toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" }),
+
+      onQuestions, onReview, onDone,
+      stepOptional: onQuestions && !!stepDef.optional,
+      skipStep: () => { this.setState(s => ({ step: Math.min(s.step + 1, total) })); window.scrollTo(0, 0); },
+      showStepNav: !onDone,
+      stepTitle: stepDef.title,
+      stepHint: stepDef.hint,
+      stepFields,
+      stepCounter: onDone ? "Submitted" : (onReview ? "Review" : "Step " + (st.step + 1) + " of " + total),
+      stepBars: STEPS.map((s, i) => ({ fill: i <= st.step ? "var(--color-accent)" : "var(--color-divider)" })),
+      backLabel: st.step === 0 ? "Leave" : "Back",
+      nextLabel: onReview ? "Submit to area" : "Continue",
+      stepBack: () => {
+        this.setState(s => (s.step <= 0 ? { page: "home" } : { step: Math.min(s.step, total) - 1 }));
+        window.scrollTo(0, 0);
+      },
+      stepNext: () => {
+        // Decide from the live step, not the render closure — a phone double-tap
+        // fires two clicks in one tick and must not skip a step or file twice.
+        let filed = false;
+        this.setState(s => {
+          if (s.advancing) return null;
+          if (s.step >= total) {
+            if (s.submitting) return null;
+            filed = true;
+            return { step: total + 1, submitting: true, advancing: true };
+          }
+          return { step: s.step + 1, advancing: true };
+        }, () => {
+          this.setState({ advancing: false });
+          if (filed) {
+            this.record("Group report", st.draft);
+            this.clearDraft();
+            this.setState({ step: total + 1, submitting: false, advancing: false });
+          } else {
+            this.persistDraft(this.state.draft, this.state.step);
+          }
+        });
+        window.scrollTo(0, 0);
+      },
+      saveAndExit: () => { this.persistDraft(st.draft, st.step); this.setState({ page: "home", hasDraft: true }); window.scrollTo(0, 0); },
+      reviewRows,
+
+      litSections: LIT_SECTIONS.map(sec => {
+        const open = !!st.openSec[sec.id];
+        const secQty = sec.items.reduce((n, p) => n + (qty[p.id] || 0), 0);
+        const row = (p) => ({
+          name: p.name, qty: qty[p.id] || 0,
+          meta: p.detail ? p.detail + " · " + money(p.cents) : money(p.cents),
+          price: money(p.cents),
+          inc: this.bump(p.id, 1), dec: this.bump(p.id, -1)
+        });
+        return {
+          name: sec.name,
+          count: secQty > 0 ? secQty + " selected" : sec.items.length + " items",
+          mark: open ? "−" : "+",
+          onToggle: () => this.setState(s => ({ openSec: Object.assign({}, s.openSec, { [sec.id]: !s.openSec[sec.id] }) })),
+          rows: open && !sec.medallions ? sec.items.map(row) : [],
+          // 42 medallion rows is unusable on a phone: pick years off a grid,
+          // and only the picked ones get a quantity stepper.
+          years: open && sec.medallions ? sec.items.map(p => ({
+            label: p.name.replace(" Years", "").replace(" Year", "").replace("18 Months", "18m"),
+            onClick: this.bump(p.id, 1),
+            bg: (qty[p.id] || 0) > 0 ? "var(--color-accent)" : "var(--color-surface)",
+            color: (qty[p.id] || 0) > 0 ? "#fff" : "var(--color-text)",
+            border: (qty[p.id] || 0) > 0 ? "var(--color-accent)" : "var(--color-divider)"
+          })) : [],
+          picked: open && sec.medallions ? sec.items.filter(p => (qty[p.id] || 0) > 0).map(row) : [],
+          yearHint: sec.medallions ? "All medallions are $5.00. Tap a year to add one, then adjust below." : ""
+        };
+      }),
+      literatureTotal: "Order total " + money(cents),
+      literatureLines: lines === 0 ? "Nothing selected yet" : lines + (lines === 1 ? " line" : " lines"),
+      literatureEmpty: lines === 0,
+      submitOrder: () => {
+        const picked = LIT_ITEMS.filter(p => (qty[p.id] || 0) > 0).map(p => ({
+          label: p.name + (p.detail ? " (" + p.detail + ")" : ""),
+          value: (qty[p.id]) + " × " + money(p.cents) + " = " + money(qty[p.id] * p.cents)
+        }));
+        const body = [
+          "Literature order",
+          "Group: " + (st.group || "—"),
+          "Date: " + this.today(),
+          "",
+          "Pickup at the area meeting, 525 N Santiam Hwy, Lebanon. Paying at pickup.",
+          ""
+        ].concat(picked.map(r => r.label + " — " + r.value))
+         .concat(["", "Order total: " + money(cents)]).join("\n");
+        const order = {
+          rows: picked.concat([{ label: "Order total", value: money(cents) }]),
+          total: money(cents),
+          mailto: "mailto:literature@lbana.org?subject=" +
+            encodeURIComponent("Literature order — " + (st.group || "group") + " — " + money(cents)) +
+            "&body=" + encodeURIComponent(body)
+        };
+        this.record("Literature order · " + money(cents), null, { order });
+        this.setState({ page: "orderdone", lastOrder: order, qty: {} });
+        window.scrollTo(0, 0);
+      },
+
+      isOrderDone: st.page === "orderdone",
+      orderRows: (st.lastOrder || { rows: [] }).rows,
+      orderTotal: (st.lastOrder || {}).total || money(0),
+      orderMailto: (st.lastOrder || {}).mailto || "mailto:literature@lbana.org",
+
+      formTitle: form.title,
+      formHint: form.hint,
+      formSubmitLabel: form.submit,
+      formFromAccount: st.formKind === "contact",
+      accountLine: (st.officer ? "Officer account" : "GSR account") + " · " + st.group,
+      formFields: form.fields.map(f => {
+        // The contact form is the account record: group and position come from
+        // the login rather than being typed in again.
+        const fromAccount = st.formKind === "contact" && (f.key === "gc-group" || f.key === "gc-role");
+        const accountValue = f.key === "gc-group" ? st.group : (st.officer ? "Area officer" : "GSR");
+        const img = st.images[f.key];
+        return {
+          key: f.key, label: f.label, placeholder: f.placeholder || "", help: f.help || "",
+          isText: f.type === "text" && !fromAccount,
+          isArea: f.type === "area",
+          isImage: f.type === "image",
+          isLocked: fromAccount,
+          lockedValue: accountValue,
+          // The src is a runtime data URL from the user's own file, so it cannot
+          // be a template hole — the bundler would try to resolve it as an asset.
+          preview: img ? React.createElement("img", {
+            src: img.url, alt: "The flyer you picked",
+            style: { display: "block", width: "100%", maxWidth: "260px", height: "auto", border: "1px solid var(--color-divider)" }
+          }) : null,
+          imageName: img ? img.name : "",
+          hasImage: !!img,
+          onPick: this.pickImage(f.key),
+          onClearImage: this.clearImage(f.key),
+          onInput: this.setField(f.key)
+        };
+      }),
+      imageError: st.imageError,
+      submitForm: () => { this.record(form.title); this.setState({ page: "home" }); window.scrollTo(0, 0); },
+
+      moreItems: [
+        { label: "Group contact", note: "Add or update who area should reach", onClick: openForm("contact", "more") },
+        { label: "Log a donation", note: "Group treasurers record what's being sent", onClick: openForm("donation", "more") },
+        { label: "Action suggestion", note: "Goes on the next area agenda", onClick: openForm("motion", "more") },
+        { label: "Agenda & minutes", note: "Current agenda and the approved archive", onClick: openDocs("agenda", "more") },
+        { label: "Document library", note: "Guidelines, forms and handbooks", onClick: openDocs("library", "more") },
+        { label: "Subcommittee report", note: "PR, H&I and activities chairs", onClick: enterReport }
+      ].concat(st.officer ? [
+        { label: "Record action taken", note: "Officers only — the outcome of a suggestion", onClick: openForm("action", "more") }
+      ] : []),
+
+      feedbackHref: "mailto:webservant@lbana.org?subject=" + encodeURIComponent("Portal test feedback"),
+
+      docsTitle: docSet.title,
+      docs: docSet.items,
+
+      tabs: [tab("home", "Home"), Object.assign(tab("report", "Report"), { onClick: enterReport }), tab("literature", "Literature"), tab("more", "More")]
+    };
+  }
+}
+
+</script>
+</body>
+</html>

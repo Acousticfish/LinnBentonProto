@@ -1,0 +1,73 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": false,
+    "useRootPaddingAwareAlignments": false,
+    "layout": { "contentSize": "760px", "wideSize": "1200px" },
+    "color": {
+      "custom": false,
+      "customGradient": false,
+      "customDuotone": false,
+      "defaultPalette": false,
+      "defaultGradients": false,
+      "defaultDuotone": false,
+      "gradients": [],
+      "duotone": [],
+      "palette": [
+        { "slug": "ink",     "name": "Ink",     "color": "#1c2430" },
+        { "slug": "ground",  "name": "Ground",  "color": "#f4f5f7" },
+        { "slug": "surface", "name": "Surface", "color": "#ffffff" },
+        { "slug": "divider", "name": "Divider", "color": "#ccd2da" },
+        { "slug": "accent",  "name": "Accent",  "color": "#1f2ec2" },
+        { "slug": "accent-deep", "name": "Accent, deep", "color": "#15208c" }
+      ]
+    },
+    "typography": {
+      "customFontSize": false,
+      "defaultFontSizes": false,
+      "fluid": false,
+      "dropCap": false,
+      "fontStyle": false,
+      "fontWeight": false,
+      "letterSpacing": false,
+      "textDecoration": false,
+      "textTransform": false,
+      "writingMode": false,
+      "lineHeight": false,
+      "fontSizes": [],
+      "fontFamilies": [
+        { "slug": "heading", "name": "Newsreader", "fontFamily": "'Newsreader', Georgia, 'Times New Roman', serif" },
+        { "slug": "body",    "name": "Archivo",    "fontFamily": "'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif" }
+      ]
+    },
+    "spacing": {
+      "padding": false,
+      "margin": false,
+      "blockGap": false,
+      "customSpacingSize": false,
+      "defaultSpacingSizes": false,
+      "units": ["px", "rem", "%"]
+    },
+    "border": { "color": false, "radius": false, "style": false, "width": false },
+    "shadow": { "defaultPresets": false, "presets": [] },
+    "dimensions": { "minHeight": false, "aspectRatio": false },
+    "background": { "backgroundImage": false }
+  },
+  "styles": {
+    "color": { "background": "var:preset|color|ground", "text": "var:preset|color|ink" },
+    "typography": { "fontFamily": "var:preset|font-family|body" },
+    "spacing": { "blockGap": "0", "padding": { "top": "0", "right": "0", "bottom": "0", "left": "0" } },
+    "elements": {
+      "heading": { "typography": { "fontFamily": "var:preset|font-family|heading", "fontWeight": "600" } },
+      "link": { "color": { "text": "var:preset|color|accent-deep" } }
+    }
+  },
+  "templateParts": [
+    { "name": "header", "title": "Header", "area": "header" },
+    { "name": "footer", "title": "Footer", "area": "footer" }
+  ],
+  "customTemplates": [
+    { "name": "page-simple", "title": "Simple page (shows the title)", "postTypes": ["page"] }
+  ]
+}
